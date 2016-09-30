@@ -2,7 +2,7 @@
 /**
 * FlatConfig
 *
-* Lighweight flat file configuration management PHP class.
+* Lightweight flat file configuration management PHP class.
 * @author       Miraz Mac <mirazmac@gmail.com>
 * @version 1.0  NewBorn
 * @link http://mirazmac.info Author Homepage
