@@ -89,7 +89,6 @@ class FlatConfig
         // Write data to the file and offcourse put a LOCK
         if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
             throw new Exception('Failed to write data to config file. Make sure the file is writable.');
-            return false;
         }
         return true;
     }
