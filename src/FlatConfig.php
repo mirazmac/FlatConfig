@@ -142,6 +142,6 @@ class FlatConfig
 
         if(is_array($data) && !empty($data)) {
             $this->config = $data;
-    }
+        }
     }
 }
