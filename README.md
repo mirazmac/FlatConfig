@@ -48,3 +48,5 @@ echo $name;
 ```
 
 Thats all folks!
+
+![http://forthebadge.com/images/featured/featured-built-with-love.svg](Built with love)
