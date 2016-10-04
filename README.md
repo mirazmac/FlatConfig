@@ -49,4 +49,5 @@ echo $name;
 
 Thats all folks!
 
-![http://forthebadge.com/images/featured/featured-built-with-love.svg](Built with love)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+
