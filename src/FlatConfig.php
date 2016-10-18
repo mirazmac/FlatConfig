@@ -81,7 +81,7 @@ class FlatConfig
      */
     public function delete($key)
     {
-        // Since we are updating the data, if the key doesn't exist, abort!
+        // Since we are removing the data, if the key doesn't exist, abort!
         if (!isset($this->config[$key]))
             return false;
         // Remove the key from array
@@ -137,7 +137,7 @@ class FlatConfig
             file_put_contents($this->configFile, '');
 
         // Grab the data, decode, store in variable
-        $data = file_get_contents($this->configFile);
+        $data = json_decode(file_get_contents($this->configFile), true);
 
         if(is_array($data) && !empty($data)) {
             $this->config = $data;
