@@ -3,6 +3,11 @@ FlatConfig is a lightweight flat file configuration management PHP class. It use
 
 ***NOTE: Don't forget to protect your configurtion file from direct access!***
 
+### Install via composer
+```bash
+composer require mirazmac/flatconfig
+```
+
 ### How to use this thing?
 
 To use FlatConfig, we need to create an instance first with the path to the configuration file. File will be created automaticly if doesn't exist.
