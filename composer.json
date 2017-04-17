@@ -1,0 +1,21 @@
+{
+    "name": "mirazmac/flatconfig",
+    "description": "Lightweight flat file configuration management PHP class.",
+    "type": "library",
+    "keywords": ["json configuration","configuration management","flat file","flatconfig"],
+    "homepage": "https://github.com/mirazmac/FlatConfig",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Miraz Mac",
+            "email": "mirazmac@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "mirazmac\\": "src/"
+        }
+    }
+}
