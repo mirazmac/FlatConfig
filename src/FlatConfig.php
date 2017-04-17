@@ -2,7 +2,7 @@
 /**
 * FlatConfig
 *
-* Lightweight flat file configuration management PHP class.
+* Lightweight key-value based flat file configuration management PHP class.
 * @author       Miraz Mac <mirazmac@gmail.com>
 * @version 1.0  NewBorn
 * @link http://mirazmac.info Author Homepage
@@ -10,7 +10,6 @@
 */
 
 namespace mirazmac;
-use Exception;
 
 class FlatConfig
 {
@@ -22,11 +21,11 @@ class FlatConfig
 
     /**
      * Class constructor
-     * 
+     *
      * @param string $configFile Full path to file where the configuration will be stored
      *                           Will be created if doesn't exist
      */
-    function __construct($configFile)
+    public function __construct($configFile)
     {
         $this->configFile = $configFile;
         $this->readConfigFile();
@@ -35,7 +34,6 @@ class FlatConfig
     /**
      * Adds a key to Config file ( will be overwritten )
      *
-     * @throws Exception If failed to write
      * @param mixed $key   The key
      * @param mixed $value And the key value
      * @return boolean
@@ -43,39 +41,33 @@ class FlatConfig
     public function add($key, $value = '')
     {
         $this->config[$key] = $value;
-        // Write data to the file and offcourse put a LOCK
-        if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
-            throw new Exception('Failed to write data to config file. Make sure the file is writable.');
-        }
-        return true;
+        // Update changes in the config file
+        return $this->writeConfigFile();
     }
 
     /**
      * Update a existing key
-     * 
-     * @throws Exception If failed to write
+     *
      * @param mixed $key   The key
      * @param mixed $value And the key value
+     * @param boolean $force Allows to to add the key to config file if it doesn't exist
      * @return boolean
      */
-    public function update($key, $value = '')
+    public function update($key, $value = '', $force = false)
     {
-        // Since we are updating the data, if the key doesnt exist, abort!
-        if (!isset($this->config[$key]))
+        // Since we are updating the data, if the key doesnt exist,
+        // and we are not being forced, abort!
+        if (!isset($this->config[$key]) && !$force)
             return false;
         // Update key value
         $this->config[$key] = $value;
-        // Write data to the file and offcourse put a LOCK
-        if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
-            throw new Exception('Failed to write data to config file. Make sure the file is writable.');
-        }
-        return true;
+        // Update changes in the config file
+        return $this->writeConfigFile();
     }
 
     /**
      * Delete an existing key
-     * 
-     * @throws Exception If failed to write
+     *
      * @param mixed $key   The key
      * @return boolean
      */
@@ -86,38 +78,25 @@ class FlatConfig
             return false;
         // Remove the key from array
         unset($this->config[$key]);
-        // Write data to the file and offcourse put a LOCK
-        if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
-            throw new Exception('Failed to write data to config file. Make sure the file is writable.');
-        }
-        return true;
+        // Update changes in the config file
+        return $this->writeConfigFile();
     }
 
     /**
      * Retrieve a key value
-     * 
+     *
      * @param  string $key     The config key
      * @param  string $default Fall back value, will be used if key doesn't exist
      * @return mixed
      */
     public function get($key, $default = '')
     {
-        return isset($this->config[$key]) ? $this->config[$key] : $default; 
-    }
-
-    /**
-     * Alias of self::get()
-     *
-     * Instead of returning this method will directly print the value
-     */
-    public function _e($key, $default = '')
-    {
-        echo $this->get($key, $default);
+        return isset($this->config[$key]) ? $this->config[$key] : $default;
     }
 
     /**
      * Retrieve all configuration as array
-     * 
+     *
      * @return array
      */
     public function getAll()
@@ -127,10 +106,11 @@ class FlatConfig
 
     /**
      * Read data from config file and store in variable
-     * 
+     *
+     * @access private
      * @return
      */
-    public function readConfigFile()
+    private function readConfigFile()
     {
         // You already know what this code does -_-
         if (!file_exists($this->configFile))
@@ -142,5 +122,20 @@ class FlatConfig
         if(is_array($data) && !empty($data)) {
             $this->config = $data;
         }
+    }
+
+    /**
+     * Update the data to the config file
+     *
+     * @throws \Exception If failed to write
+     * @access private
+     * @return boolean
+     */
+    private function writeConfigFile()
+    {
+        if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
+            throw new \Exception('Failed to write data to the config file. Make sure the file is writable.');
+        }
+        return true;
     }
 }
