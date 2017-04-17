@@ -1,4 +1,5 @@
 <?php
+error_reporting(-1);
 require_once __DIR__ .'/src/FlatConfig.php';
 $configFile = __DIR__ .'/config.json';
 use mirazmac\FlatConfig;
@@ -7,25 +8,24 @@ use mirazmac\FlatConfig;
 $config = New FlatConfig($configFile);
 
 // Add some values
-$config->add('name', 'Miraz');
-$config->add('url', 'https://mirazmac.info');
-$config->add('comment', 'Hmm! Looking great watson!');
-$config->add('duplicate', 'Hmm! Looking great watson!');
+echo 'Adding some values:<br/>';
+var_dump($config->add('name', 'Miraz'));
+var_dump($config->add('url', 'https://mirazmac.info'));
+var_dump($config->add('comment', 'Hmm! Looking great watson!'));
+var_dump($config->add('duplicate', 'Hmm! Looking great watson!'));
+var_dump($config->add('another', 'Hmm! Looking great watson!'));
 
+echo '<hr/>Update a value:<br/>';
 // Update a value
-$config->update('name', 'Miraz Mac');
+var_dump($config->update('name', 'Miraz Mac'));
 
+echo '<hr/>Delete a Value<br/>';
 // Delete a value
-$config->delete('duplicate');
-
+var_dump($config->delete('duplicate'));
+echo '<hr/>Print a single key value:<br/>';
 // Print a single key
-echo $config->get('name');
+echo var_dump($config->get('name'));
 
-echo '<hr/>';
-
-// Alias of FlatConfig::get()
-$config->_e('url');
-
-echo '<hr/>';
+echo '<hr/>Retrieve the whole array:<br/>';
 // Retrieve the whole array
 var_dump($config->getAll());
