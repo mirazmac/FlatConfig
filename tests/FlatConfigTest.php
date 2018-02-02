@@ -87,13 +87,13 @@ class FlatConfigTest extends TestCase
 
     public function testReadConfigFileWithEmptyFileName()
     {
-        $this->expectException('\Exception');
+        $this->setExpectedException('\Exception');
         $flatConfig = new FlatConfig('');
     }
 
     public function testWriteConfigFileWithEmptyFileName()
     {
-        $this->expectException('\Exception');
+        $this->setExpectedException('\Exception');
         $this->flatConfig->configFile = '';
         $this->flatConfig->add('key', 'value');
     }
