@@ -8,18 +8,21 @@ class FlatConfigTest extends TestCase
 {
     protected $flatConfig;
     protected $emptyFlatConfig;
-    protected $nonExistedConfFile = __DIR__.'/non_existed.conf';
-    protected $confFilePath = __DIR__.'/example.conf';
-    protected $nonEmptyConfFilePath = __DIR__.'/non_empty.conf';
+    protected $nonExistedConfFile;
+    protected $confFilePath;
+    protected $nonEmptyConfFilePath;
 
-    public function setUp()
+    protected function setUp()
     {
+        $this->nonExistedConfFile = __DIR__.'/non_existed.conf';
+        $this->confFilePath = __DIR__.'/example.conf';
+        $this->nonEmptyConfFilePath = __DIR__.'/non_empty.conf';
         @touch($this->confFilePath);
         $this->flatConfig = new FlatConfig($this->confFilePath);
         $this->emptyFlatConfig = new FlatConfig($this->nonEmptyConfFilePath);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         @unlink($this->confFilePath);
         @unlink($this->emptyFlatConfig);
