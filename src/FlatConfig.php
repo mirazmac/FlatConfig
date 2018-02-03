@@ -112,6 +112,8 @@ class FlatConfig
      */
     private function readConfigFile()
     {
+        if ($this->configFile === '')
+            throw new \Exception('Filename cannot be empty');
         // You already know what this code does -_-
         if (!file_exists($this->configFile))
             file_put_contents($this->configFile, '');
@@ -133,7 +135,7 @@ class FlatConfig
      */
     private function writeConfigFile()
     {
-        if (!file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
+        if (!@file_put_contents($this->configFile, json_encode($this->config), LOCK_EX)) {
             throw new \Exception('Failed to write data to the config file. Make sure the file is writable.');
         }
         return true;
